@@ -4,6 +4,7 @@ import { router } from './router.tsx'
 import { RouterProvider } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { store } from './state/store.ts'
+import "bootstrap/dist/css/bootstrap.min.css";
 
 
 createRoot(document.getElementById("root")!).render(
