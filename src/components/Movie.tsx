@@ -1,10 +1,12 @@
 import type { MovieSearchResult } from "../MovieTypes";
-import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { fetchMovieDetails } from "../state/movieDetailsSlice";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
+import { FavoriteBtn } from "./FavoriteButton";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
+import { setFavoritesList } from "../state/favoritesSlice";
 
 type MovieProps = {
   data: MovieSearchResult;
@@ -13,25 +15,24 @@ type MovieProps = {
 export function Movie({ data }: MovieProps) {
   const { imdbID, Title, Year, Type, Poster } = data;
   const navigate = useNavigate();
-  const [favorite, setFavorite] = useState(false);
+
+  const favorites = useAppSelector((state) => state.favorites.favoritesList)
+  const isFavorite = favorites.some((movie) => movie.imdbID === data.imdbID)
+  const dispatch = useAppDispatch();
 
   const handleClick = () => {
     fetchMovieDetails(imdbID);
     navigate(`/movie/${imdbID}`);
   };
 
-  const handleFavoriteClick = () => {
-    setFavorite((prev) => !prev);
-  };
-
   return (
     <>
       <Card className="bg-dark text-white">
-        <Link to="">
+        <Link to={`/movie/${imdbID}`}>
           <Card.Img variant="top" src={Poster} />
         </Link>
         <Card.Body>
-          <Link style={{ textDecoration: "none" }} to="">
+          <Link style={{ textDecoration: "none" }} to={`/movie/${imdbID}`}>
             <Card.Title style={{ fontSize: "20px", marginBottom: "20px" }}>
               {Title.length > 20 ? Title.slice(0, 20) + "..." : Title}
             </Card.Title>
@@ -52,15 +53,9 @@ export function Movie({ data }: MovieProps) {
             <Button onClick={() => handleClick()} variant="info">
               Details
             </Button>
-            <img
-              onClick={handleFavoriteClick}
-              src={
-                !favorite
-                  ? "/icons/icons8-heart-50 (6).png"
-                  : "/icons/icons8-heart-50 (1).png"
-              }
-              alt="favorite icon"
-              className="favorite-icon"
+            <FavoriteBtn
+              isFavorite={isFavorite}
+              onClick={() => dispatch(setFavoritesList(data))}
             />
           </Container>
         </Card.Body>

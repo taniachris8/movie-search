@@ -19,7 +19,9 @@ export default function App() {
   }, [searchTerm]);
 
    const movies = useAppSelector((state) => state.movies);
-   const movie = useAppSelector((state) => state.movie.data);
+  const movie = useAppSelector((state) => state.movie.data);
+  const favorites = useAppSelector((state) => state.favorites)
+  console.log("favorites", favorites)
    console.log("movies", movies);
    console.log("movie", movie);
 
