@@ -40,10 +40,3 @@ export type SearchResponse = {
   Response: string;
   Error?: string;
 }
-
-// export type DetailsResponse = {
-//  Search: MovieDetails;
-// //   totalResults: string;
-//   Response: string;
-//   Error?: string;
-// };

@@ -1,4 +1,4 @@
-import type { MovieSearchResult } from "../MovieTypes";
+import type { MovieSearchResult } from "../movieTypes";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -9,7 +9,7 @@ import { MoviePlaceholder } from "./placeholders/MoviePlaceholder";
 type MovieListProps = {
   list: MovieSearchResult[];
   status: "idle" | "loading" | "succeeded" | "failed";
-  error?: string
+  error?: string;
 };
 
 export function MovieList({ list, status, error }: MovieListProps) {

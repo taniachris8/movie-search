@@ -3,7 +3,7 @@ import {
   createSlice,
   type PayloadAction,
 } from "@reduxjs/toolkit";
-import type { MovieDetails } from "../MovieTypes";
+import type { MovieDetails } from "../movieTypes";
 
 const url = "https://www.omdbapi.com?apikey=64405bd2&i=";
 

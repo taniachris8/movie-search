@@ -4,8 +4,8 @@ import {
   type PayloadAction,
 } from "@reduxjs/toolkit";
 
-import type { SearchResponse } from "../MovieTypes";
-import type { MovieSearchResult } from "../MovieTypes";
+import type { SearchResponse } from "../movieTypes";
+import type { MovieSearchResult } from "../movieTypes";
 
 const url = "https://www.omdbapi.com?apikey=64405bd2&s=";
 
@@ -53,8 +53,7 @@ const searchedMoviesSlice = createSlice({
       )
       .addCase(fetchMovies.rejected, (state, action) => {
         state.status = "failed";
-        state.error =
-          action.payload ?? action.error.message ?? "Unknown Error";
+        state.error = action.payload ?? action.error.message ?? "Unknown Error";
       });
   },
 });

@@ -1,14 +1,9 @@
 import Alert from "react-bootstrap/Alert";
 
 type ErrorProps = {
-    error: string
-}
+  error: string;
+};
 
-export function ErrorAlert({ error }: ErrorProps) { 
-    return (
-      <>
-        <Alert variant="danger">{error}</Alert>;
-      </>
-    );
-    
+export function ErrorAlert({ error }: ErrorProps) {
+  return <Alert variant="danger">{error}</Alert>;
 }

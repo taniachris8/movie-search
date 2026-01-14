@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { MovieSearchResult } from "../MovieTypes";
+import type { MovieSearchResult } from "../movieTypes";
 
 type FavoritesState = {
   favoritesList: MovieSearchResult[];

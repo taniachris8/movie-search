@@ -1,4 +1,4 @@
-import type { MovieSearchResult } from "../MovieTypes";
+import type { MovieSearchResult } from "../movieTypes";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 import { FavoriteBtn } from "./FavoriteButton";

@@ -4,7 +4,7 @@ import { Col } from "react-bootstrap";
 import { Movie } from "../components/Movie";
 import { NavbarComponent } from "../components/Navbar";
 import { useAppSelector } from "../state/hooks";
-import type { MovieSearchResult } from "../MovieTypes";
+import type { MovieSearchResult } from "../movieTypes";
 
 export function FavoritesPage() {
   const favorites = useAppSelector((state) => state.favorites.favoritesList);
