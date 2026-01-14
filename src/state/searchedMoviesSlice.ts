@@ -3,9 +3,7 @@ import {
   createSlice,
   type PayloadAction,
 } from "@reduxjs/toolkit";
-
-import type { SearchResponse } from "../movieTypes";
-import type { MovieSearchResult } from "../movieTypes";
+import type { SearchResponse, MovieSearchResult } from "../movieTypes";
 
 const url = "https://www.omdbapi.com?apikey=64405bd2&s=";
 
