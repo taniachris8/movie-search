@@ -11,15 +11,27 @@ export function FavoritesPage() {
 
   return (
     <>
-      <Container>
+      <Container
+        style={{
+          maxWidth: "1000px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "20px",
+          marginBottom: "50px",
+        }}>
         <NavbarComponent />
         <Row>
-          {favorites.length === 0 && <p style={{ color: "white", marginTop: "30px"}}>No movie has been added to Favorites</p>}
-          {favorites && favorites.map((movie: MovieSearchResult) => (
-            <Col key={movie.imdbID} xs={6} md={4}>
-              <Movie data={movie} />
-            </Col>
-          ))}
+          {favorites.length === 0 && (
+            <p style={{ color: "white", marginTop: "30px" }}>
+              No movie has been added to Favorites
+            </p>
+          )}
+          {favorites &&
+            favorites.map((movie: MovieSearchResult) => (
+              <Col key={movie.imdbID} xs={6} md={4}>
+                <Movie data={movie} />
+              </Col>
+            ))}
         </Row>
       </Container>
     </>

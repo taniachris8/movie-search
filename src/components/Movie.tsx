@@ -1,11 +1,8 @@
 import type { MovieSearchResult } from "../MovieTypes";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { fetchMovieDetails } from "../state/movieDetailsSlice";
-import { Link, useNavigate } from "react-router-dom";
-import { Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { FavoriteBtn } from "./FavoriteButton";
-import { useAppDispatch, useAppSelector } from "../state/hooks";
+import { useAppSelector, useAppDispatch } from "../state/hooks";
 import { setFavoritesList } from "../state/favoritesSlice";
 
 type MovieProps = {
@@ -14,16 +11,10 @@ type MovieProps = {
 
 export function Movie({ data }: MovieProps) {
   const { imdbID, Title, Year, Type, Poster } = data;
-  const navigate = useNavigate();
-
-  const favorites = useAppSelector((state) => state.favorites.favoritesList)
-  const isFavorite = favorites.some((movie) => movie.imdbID === data.imdbID)
   const dispatch = useAppDispatch();
 
-  const handleClick = () => {
-    fetchMovieDetails(imdbID);
-    navigate(`/movie/${imdbID}`);
-  };
+  const favorites = useAppSelector((state) => state.favorites.favoritesList);
+  const isFavorite = favorites.some((item) => item.imdbID === imdbID);
 
   return (
     <>
@@ -32,32 +23,33 @@ export function Movie({ data }: MovieProps) {
           <Card.Img variant="top" src={Poster} />
         </Link>
         <Card.Body>
-          <Link style={{ textDecoration: "none" }} to={`/movie/${imdbID}`}>
-            <Card.Title style={{ fontSize: "20px", marginBottom: "20px" }}>
-              {Title.length > 20 ? Title.slice(0, 20) + "..." : Title}
-            </Card.Title>
-          </Link>
-
-          <Card.Text style={{ fontSize: "14px", marginBottom: "5px" }}>
-            Released: {Year}
-          </Card.Text>
-          <Card.Text style={{ fontSize: "14px" }}>Genre: {Type}</Card.Text>
-
-          <Container
+          <div
             style={{
               display: "flex",
-              justifyContent: "space-between",
+              flexDirection: "row",
               alignItems: "center",
-              paddingLeft: "0",
+              justifyContent: "space-between",
+              padding: "0",
             }}>
-            <Button onClick={() => handleClick()} variant="info">
-              Details
-            </Button>
+            <Link style={{ textDecoration: "none" }} to={`/movie/${imdbID}`}>
+              <Card.Title style={{ fontSize: "20px", margin: "0" }}>
+                {Title.length > 20 ? Title.slice(0, 20) + "..." : Title}
+              </Card.Title>
+            </Link>
             <FavoriteBtn
               isFavorite={isFavorite}
               onClick={() => dispatch(setFavoritesList(data))}
             />
-          </Container>
+          </div>
+          <Card.Text
+            style={{
+              fontSize: "14px",
+              marginBottom: "5px",
+              marginTop: "20px",
+            }}>
+            Released: {Year}
+          </Card.Text>
+          <Card.Text style={{ fontSize: "14px" }}>Type: {Type}</Card.Text>
         </Card.Body>
       </Card>
     </>

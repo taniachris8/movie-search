@@ -14,8 +14,6 @@ const favoritesSlice = createSlice({
   initialState,
   reducers: {
     setFavoritesList: (state, action) => {
-      console.log("state", state);
-      console.log("action.payload", action.payload);
       const movie = action.payload;
       if (state.favoritesList.some((m) => m.imdbID === movie.imdbID)) {
         state.favoritesList = state.favoritesList.filter(

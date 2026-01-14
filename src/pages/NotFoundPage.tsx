@@ -3,8 +3,10 @@ import { Link } from "react-router";
 export function NotFoundPage() {
   return (
     <>
-      <div className="not-found-block">
-        <p className="not-found-text">Страница не найдена</p>
+      <div style={{ margin: "50px" }}>
+        <p style={{ color: "white", marginBottom: "10px" }}>
+          Страница не найдена
+        </p>
         <Link to="/" className="back-home-link">
           На главную
         </Link>

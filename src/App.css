@@ -1,17 +1,5 @@
 * {
-  box-sizing: border-box;
-  margin: 0;
   background-color: rgb(33, 33, 33);
-}
-
-/* Not Found Page styles */
-.not-found-block {
-  margin: 50px
-}
-
-.not-found-text {
-  color: white;
-  margin-bottom: 10px;
 }
 
 .favorite-icon {

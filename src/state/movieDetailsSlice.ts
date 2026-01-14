@@ -4,7 +4,6 @@ import {
   type PayloadAction,
 } from "@reduxjs/toolkit";
 import type { MovieDetails } from "../MovieTypes";
-import type { DetailsResponse } from "../MovieTypes";
 
 const url = "https://www.omdbapi.com?apikey=64405bd2&i=";
 
@@ -12,21 +11,19 @@ export const fetchMovieDetails = createAsyncThunk(
   "movie/details",
   async (id: string) => {
     const response = await fetch(url + id);
-    console.log("url", url + id);
-    return response.json();
+    const result = await response.json();
+    return result;
   }
 );
 
 interface MovieDetailsState {
   status: "idle" | "loading" | "succeeded" | "failed";
   data: MovieDetails | null;
-  error: string | null;
 }
 
 const initialState: MovieDetailsState = {
   status: "idle",
   data: null,
-  error: null,
 };
 
 const movieDetailsSlice = createSlice({
@@ -42,13 +39,11 @@ const movieDetailsSlice = createSlice({
         fetchMovieDetails.fulfilled,
         (state, action: PayloadAction<MovieDetails>) => {
           state.status = "succeeded";
-          console.log("from thunk", action.payload);
           state.data = action.payload;
         }
       )
-      .addCase(fetchMovieDetails.rejected, (state, action) => {
+      .addCase(fetchMovieDetails.rejected, (state) => {
         state.status = "failed";
-        state.error = action.error.message ?? "Неизвестная ошибка";
       });
   },
 });

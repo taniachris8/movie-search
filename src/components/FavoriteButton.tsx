@@ -1,9 +1,9 @@
 type FavoriteBtnProps = {
-  onClick: () => void;
   isFavorite: boolean;
+  onClick: () => void;
 };
 
-export function FavoriteBtn({ onClick, isFavorite }: FavoriteBtnProps) {
+export function FavoriteBtn({ isFavorite, onClick }: FavoriteBtnProps) {
   return (
     <>
       <img
@@ -14,7 +14,11 @@ export function FavoriteBtn({ onClick, isFavorite }: FavoriteBtnProps) {
             : "/icons/icons8-heart-50 (1).png"
         }
         alt="favorite icon"
-        className="favorite-icon"
+        style={{
+          width: "24px",
+          height: "24px",
+          cursor: "pointer",
+        }}
       />
     </>
   );
