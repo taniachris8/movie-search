@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { FavoriteBtn } from "./FavoriteButton";
 import { useAppSelector, useAppDispatch } from "../state/hooks";
 import { setFavoritesList } from "../state/favoritesSlice";
+import { withFallback } from "../fallback";
 
 type MovieProps = {
   data: MovieSearchResult;
@@ -20,7 +21,20 @@ export function Movie({ data }: MovieProps) {
     <>
       <Card className="bg-dark text-white">
         <Link to={`/movie/${imdbID}`}>
-          <Card.Img variant="top" src={Poster} />
+          <Card.Img
+            onError={(e) => {
+              e.currentTarget.src = "/img/no-poster.jpg";
+            }}
+            variant="top"
+            src={withFallback(Poster, "/img/no-poster.jpg")}
+            alt={Title}
+            style={{
+              width: "300px",
+              height: "440px",
+              objectFit: "contain",
+              flexShrink: 0,
+            }}
+          />
         </Link>
         <Card.Body>
           <div
@@ -47,9 +61,11 @@ export function Movie({ data }: MovieProps) {
               marginBottom: "5px",
               marginTop: "20px",
             }}>
-            Released: {Year}
+            Released: {withFallback(Year)}
           </Card.Text>
-          <Card.Text style={{ fontSize: "14px" }}>Type: {Type}</Card.Text>
+          <Card.Text style={{ fontSize: "14px" }}>
+            Type: {withFallback(Type)}
+          </Card.Text>
         </Card.Body>
       </Card>
     </>

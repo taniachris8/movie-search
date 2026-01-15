@@ -1,31 +1,22 @@
 import Form from "react-bootstrap/Form";
 import { useAppDispatch } from "../state/hooks";
-import { fetchMovies } from "../state/searchedMoviesSlice";
+import { setSearchTerm } from "../state/filterSlice";
 
 type SearchInputProps = {
   searchTerm: string;
-  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export function SearchInput({ searchTerm, setSearchTerm }: SearchInputProps) {
+export function SearchInput({ searchTerm }: SearchInputProps) {
   const dispatch = useAppDispatch();
-
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    dispatch(fetchMovies(searchTerm));
-  };
-
   return (
     <>
-      <Form
-        style={{ display: "flex", gap: "10px", alignItems: "center" }}
-        onSubmit={handleSearch}>
+      <Form style={{ display: "flex", gap: "10px", alignItems: "center" }}>
         <Form.Control
           type="text"
           name="movieName"
           className="search-input bg-dark text-light"
           placeholder="Поиск фильма..."
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => dispatch(setSearchTerm(e.target.value))}
           value={searchTerm}
         />
       </Form>

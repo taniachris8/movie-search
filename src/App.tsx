@@ -1,7 +1,7 @@
 import "./App.css";
 import { Container } from "react-bootstrap";
 import { useAppSelector, useAppDispatch } from "./state/hooks";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { fetchMovies } from "./state/searchedMoviesSlice";
 import { NavbarComponent } from "./components/Navbar";
 import { SearchInput } from "./components/SearchInput";
@@ -9,15 +9,22 @@ import { MovieList } from "./components/MovieList";
 
 export default function App() {
   const dispatch = useAppDispatch();
-  const [searchTerm, setSearchTerm] = useState("");
+  const searchTerm = useAppSelector((state) => state.filter.searchTerm);
 
   useEffect(() => {
-    if (searchTerm.trim() !== "") {
+    if (!searchTerm.trim()) return;
+
+    const timeoutId = setTimeout(() => {
       dispatch(fetchMovies(searchTerm));
-    }
-  }, [searchTerm]);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [searchTerm, dispatch]);
 
   const movies = useAppSelector((state) => state.movies);
+  console.log(movies.data)
 
   return (
     <>
@@ -29,7 +36,7 @@ export default function App() {
           gap: "20px",
         }}>
         <NavbarComponent />
-        <SearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <SearchInput searchTerm={searchTerm} />
         {searchTerm && (
           <MovieList
             list={movies.data}

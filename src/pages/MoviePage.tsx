@@ -10,6 +10,7 @@ import { NavbarComponent } from "../components/Navbar";
 import { FavoriteBtn } from "../components/FavoriteButton";
 import { ErrorAlert } from "../components/ErrorAlert";
 import { MoviePagePlaceholder } from "../components/placeholders/MoviePagePlaceholder";
+import { withFallback } from "../fallback";
 
 export function MoviePage() {
   const { id } = useParams();
@@ -22,10 +23,12 @@ export function MoviePage() {
   }, [id]);
 
   const movie = useAppSelector((state) => state.movie);
+
   const favorites = useAppSelector((state) => state.favorites.favoritesList);
   const isFavorite = favorites.some(
     (item) => item.imdbID === movie.data?.imdbID
   );
+
 
   return (
     <>
@@ -57,7 +60,20 @@ export function MoviePage() {
               }}>
               <div
                 style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
-                <Card.Img variant="top" src={movie.data.Poster} />
+                <Card.Img
+                  variant="top"
+                  src={withFallback(movie.data.Poster, "/img/no-poster.jpg")}
+                  onError={(e) => {
+                    e.currentTarget.src = "/img/no-poster.jpg";
+                  }}
+                  alt={movie.data.Title}
+                  style={{
+                    width: "360px",
+                    height: "540px",
+                    objectFit: "contain",
+                    flexShrink: 0,
+                  }}
+                />
                 <div
                   style={{
                     width: "520px",
@@ -79,24 +95,33 @@ export function MoviePage() {
                   <ListGroup
                     style={{ fontSize: "14px" }}
                     className="list-group-flush">
-                    <ListGroup.Item>Year: {movie.data.Year}</ListGroup.Item>
-                    <ListGroup.Item>Genre: {movie.data.Genre}</ListGroup.Item>
                     <ListGroup.Item>
-                      Runtime: {movie.data.Runtime}
+                      Year: {withFallback(movie.data.Year)}
                     </ListGroup.Item>
                     <ListGroup.Item>
-                      Director: {movie.data.Director}
+                      Genre: {withFallback(movie.data.Genre)}
                     </ListGroup.Item>
-                    <ListGroup.Item>Actors: {movie.data.Actors}</ListGroup.Item>
                     <ListGroup.Item>
-                      Rating imdb: {movie.data.imdbRating}
+                      Runtime: {withFallback(movie.data.Runtime)}
                     </ListGroup.Item>
-                    <ListGroup.Item>Awards: {movie.data.Awards}</ListGroup.Item>
+                    <ListGroup.Item>
+                      Director:{" "}
+                      {withFallback(withFallback(movie.data.Director))}
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      Actors: {withFallback(movie.data.Actors)}
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      Rating imdb: {withFallback(movie.data.imdbRating)}
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      Awards: {withFallback(movie.data.Awards)}
+                    </ListGroup.Item>
                   </ListGroup>
                 </div>
               </div>
               <div>
-                <Card.Text>{movie.data.Plot}</Card.Text>
+                <Card.Text>{withFallback(movie.data.Plot)}</Card.Text>
               </div>
             </Card.Body>
           </Card>
